@@ -14,6 +14,10 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JPasswordField;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -98,6 +102,7 @@ public class DigitalSignatureApp extends JFrame {
         }
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private class SignAndSendAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -106,8 +111,33 @@ public class DigitalSignatureApp extends JFrame {
                 return;
             }
 
-            String pin = JOptionPane.showInputDialog(DigitalSignatureApp.this, "Въведете PIN за електронния подпис:");
-            if (pin == null || pin.isEmpty()) {
+            JPasswordField passwordField = new JPasswordField();
+            Object[] message = {
+                    "Въведете PIN за електронния подпис:", passwordField
+            };
+            final char defaultEchoChar = passwordField.getEchoChar();
+
+            passwordField.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    passwordField.setEchoChar((char) 0);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    passwordField.setEchoChar(defaultEchoChar);
+                }
+            });
+
+            int option = JOptionPane.showConfirmDialog(DigitalSignatureApp.this, message, "PIN", JOptionPane.OK_CANCEL_OPTION);
+            String pin = null;
+            if (option == JOptionPane.OK_OPTION) {
+                pin = new String(passwordField.getPassword());
+                if (pin.isEmpty()) {
+                    log("PIN не е въведен.");
+                    return;
+                }
+            } else {
                 log("PIN не е въведен.");
                 return;
             }
@@ -138,6 +168,7 @@ public class DigitalSignatureApp extends JFrame {
             }
         }
     }
+
 
     private KeyStore loadKeyStore(String pin) throws Exception {
         String libraryPath = getPKCS11LibraryPath();
