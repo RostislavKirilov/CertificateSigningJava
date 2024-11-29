@@ -355,7 +355,7 @@ public class DigitalSignatureApp extends JFrame {
         httpPost.setHeader("Content-Type", "application/json");
         httpPost.setEntity(new StringEntity(json, "UTF-8"));
 
-        httpPost.setHeader("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtleS1pZCJ9.eyJzY29wZSI6WyJlcy1hcGktZXh0ZXJuYWw6c3VibWl0LWRlY2xhcmF0aW9uLXRlc3QiLCJlcy1hcGktZXh0ZXJuYWw6YXBpLWV4dGVybmFsIl0sImV4cCI6MTc2NDE2Mjg5NywianRpIjoiNDMwNmMwOWQtNWU1Yy00NzFiLTg3NzYtMjNhODkzNTkxYWJjIiwiY2xpZW50X2lkIjoiYzY5OGExNjItMDcxZS00YjQ2LWI2NDgtODI4ZTY5YWVmYWM3In0.NkA4ZgFGB7UvTlRMH5pASePAgNVuN-3jMEb2vfMuxKeS5II9g0IgXd-dJ65smRko1JQM3HrwEMYNhUEEo0UMICJSGgr766tGOIkFX5a7qmcnD8vdxBHU7fk3j5EOEtNrxAisG21PtY--HuDROokLwbFuJfoQRXVQ-H8NfNoTT_oSujxhKhQx6IDRb1pPznKyOskUimTGz8UCbA20d8oP9nhVIf67vdOFqjqRqn7I6d2Opwt9hWZh6S5rKvkINSi98DAzpW19Lvcwhry1YEIHSu00zszKLKQOScYGLgX_0ff00wuTUu-xdBKVvcUAWX1n-39u-Y3LXRQr6ipkiYLYYQ\n");
+        httpPost.setHeader("Authorization", "Bearer token");
 
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
             int statusCode = response.getStatusLine().getStatusCode();
